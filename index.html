@@ -1037,3 +1037,89 @@ class Component extends DCLogic {
       // nav
       navDashboard:this.navStyle('dashboard'), navEquipment:this.navStyle('equipment'),
       navEqin:this.navStyle('eqin'), navEqout:this.navStyle('eqout'), navRet:this.navStyle('ret'),
+
+      navMaint:this.navStyle('maintenance'), navReport:this.navStyle('report'),
+      navUsers:this.navStyle('users'), navHistory:this.navStyle('history'),
+      canEqin:this.can('eqin'), canEqout:this.can('eqout'), canRet:this.can('ret'),
+      canMaint:this.can('maintenance'), canReport:this.can('report'),
+      canUsers:this.can('users'), canHistory:this.can('history'),
+      go,
+      pageTitle:pm.t, pageSubtitle:pm.s,
+      userName:    u ? u.nama_lengkap.split(' ').slice(0,2).join(' ') : '',
+      userInitials:u ? u.nama_lengkap.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase() : '',
+      roleLabel:   S.role==='logistik' ? 'Koordinator Logistik' : 'Anggota Kepengurusan',
+      // login
+      luser:S.luser, lpass:S.lpass, loginError:S.loginError,
+      loginBtnLabel: S.loginLoading ? 'Memproses…' : 'Masuk ke Sistem',
+      onUser:e=>this.set({luser:e.target.value}),
+      onPass:e=>this.set({lpass:e.target.value}),
+      login: ()=>this.doLogin(),
+      logout:()=>this.doLogout(),
+      openSidebar:()=>this.openSidebar(),
+      closeSidebar:()=>this.closeSidebar(),
+      // tables
+      equipmentView, equipmentOptions,
+      txInView, txOutView, returnsView, maintView, usersView,
+      activeLoans: S.activeLoans||[],
+      histView, histCount: histView.length,
+      // filters
+      search:S.search, onSearch:e=>{ this.set({search:e.target.value}); this.loadPage(S.page); },
+      cat:S.cat, cond:S.cond,
+      onCat: e=>{ this.set({cat:e.target.value});  this.loadPage('equipment'); },
+      onCond:e=>{ this.set({cond:e.target.value}); this.loadPage('equipment'); },
+      histType:S.histType, onHistType:e=>{ this.set({histType:e.target.value}); this.loadPage('history'); },
+      // forms eqin
+      formEqinId:S.formEqinId, onFormEqinId:e=>this.set({formEqinId:e.target.value}),
+      formEqinQty:S.formEqinQty, onFormEqinQty:e=>this.set({formEqinQty:e.target.value}),
+      formEqinDate:S.formEqinDate, onFormEqinDate:e=>this.set({formEqinDate:e.target.value}),
+      formEqinSumber:S.formEqinSumber, onFormEqinSumber:e=>this.set({formEqinSumber:e.target.value}),
+      formEqinKondisi:S.formEqinKondisi, onFormEqinKondisi:e=>this.set({formEqinKondisi:e.target.value}),
+      saveEqin:()=>this.saveEqin(),
+      // forms eqout
+      formEqoutId:S.formEqoutId, onFormEqoutId:e=>this.set({formEqoutId:e.target.value}),
+      formEqoutQty:S.formEqoutQty, onFormEqoutQty:e=>this.set({formEqoutQty:e.target.value}),
+      formEqoutDate:S.formEqoutDate, onFormEqoutDate:e=>this.set({formEqoutDate:e.target.value}),
+      formEqoutPeminjam:S.formEqoutPeminjam, onFormEqoutPeminjam:e=>this.set({formEqoutPeminjam:e.target.value}),
+      formEqoutEst:S.formEqoutEst, onFormEqoutEst:e=>this.set({formEqoutEst:e.target.value}),
+      saveEqout:()=>this.saveEqout(),
+      // forms ret
+      formRetId:S.formRetId, onFormRetId:e=>this.set({formRetId:e.target.value}),
+      formRetQty:S.formRetQty, onFormRetQty:e=>this.set({formRetQty:e.target.value}),
+      formRetDate:S.formRetDate, onFormRetDate:e=>this.set({formRetDate:e.target.value}),
+      formRetKondisi:S.formRetKondisi, onFormRetKondisi:e=>this.set({formRetKondisi:e.target.value}),
+      formRetCatatan:S.formRetCatatan, onFormRetCatatan:e=>this.set({formRetCatatan:e.target.value}),
+      saveRet:()=>this.saveRet(),
+      // forms user
+      formUserNama:S.formUserNama, onFormUserNama:e=>this.set({formUserNama:e.target.value}),
+      formUserNim:S.formUserNim,   onFormUserNim:e=>this.set({formUserNim:e.target.value}),
+      formUserEmail:S.formUserEmail, onFormUserEmail:e=>this.set({formUserEmail:e.target.value}),
+      formUserPass:S.formUserPass,   onFormUserPass:e=>this.set({formUserPass:e.target.value}),
+      formUserRole:S.formUserRole,   onFormUserRole:e=>this.set({formUserRole:e.target.value}),
+      formUserStatus:S.formUserStatus, onFormUserStatus:e=>this.set({formUserStatus:e.target.value}),
+      saveUser:()=>this.saveUser(),
+      // misc
+      reportCards,
+      toast:S.toast, hasToast:!!S.toast
+    };
+  }
+
+  componentDidMount(){
+    // Auto-login if token saved
+    if (this.state.token) {
+      this.api('GET', '/api/auth/me').then(d=>{
+        this.set({loggedIn:true, user:d.user, role:d.user.role, page:'dashboard'});
+        this.loadPage('dashboard');
+      }).catch(()=>{
+        localStorage.removeItem('archatel_token');
+        this.set({token:''});
+      });
+    }
+  }
+}
+
+function today(){
+  return new Date().toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>
