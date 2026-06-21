@@ -11,8 +11,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -792,17 +790,27 @@ class Component extends DCLogic {
         a.click(); URL.revokeObjectURL(a.href);
         this.toast('✓ File CSV berhasil diunduh');
       } else {
-        const {jsPDF} = window.jspdf;
-        const doc = new jsPDF({orientation:'landscape'});
-        doc.setFontSize(14); doc.setFont(undefined,'bold');
-        doc.text('ARCHATEL — '+filename.replace(/_/g,' '), 14, 15);
-        doc.setFontSize(9); doc.setFont(undefined,'normal');
-        doc.text('Dicetak: '+new Date().toLocaleString('id-ID'), 14, 22);
-        doc.autoTable({head:[headers],body:rows,startY:28,
-          styles:{fontSize:8,cellPadding:2},
-          headStyles:{fillColor:[193,18,31],textColor:255,fontStyle:'bold'}});
-        doc.save(filename+'.pdf');
-        this.toast('✓ File PDF berhasil diunduh');
+        const title = 'ARCHATEL — '+filename.replace(/_/g,' ');
+        const printed = new Date().toLocaleString('id-ID');
+        const thead = '<tr>'+headers.map(h=>`<th>${h}</th>`).join('')+'</tr>';
+        const tbody = rows.map(r=>'<tr>'+r.map(c=>`<td>${c??''}</td>`).join('')+'</tr>').join('');
+        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title>
+<style>
+  body{font-family:Arial,sans-serif;font-size:11px;padding:20px;}
+  h2{color:#C1121F;margin:0 0 4px;}p{color:#888;font-size:10px;margin:0 0 12px;}
+  table{width:100%;border-collapse:collapse;}
+  th{background:#C1121F;color:#fff;padding:7px 8px;text-align:left;font-size:10px;}
+  td{padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;}
+  tr:nth-child(even) td{background:#f9f9f9;}
+  @media print{body{padding:10px;}}
+</style></head><body>
+<h2>${title}</h2><p>Dicetak: ${printed}</p>
+<table><thead>${thead}</thead><tbody>${tbody}</tbody></table>
+<script>window.onload=()=>{window.print();window.onafterprint=()=>window.close();}<\/script>
+</body></html>`;
+        const w = window.open('','_blank','width=900,height=700');
+        w.document.write(html); w.document.close();
+        this.toast('✓ Dialog print terbuka — pilih "Save as PDF"');
       }
     } catch(e){ this.toast('Error: '+e.message); }
   }
