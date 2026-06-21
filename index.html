@@ -11,6 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -81,7 +83,7 @@
   <div style="display:flex;min-height:100vh;">
 
     <!-- SIDEBAR -->
-    <aside style="width:258px;flex-shrink:0;background:#fff;border-right:1px solid #EAECEF;display:flex;flex-direction:column;padding:20px 16px;position:sticky;top:0;height:100vh;">
+    <aside style="width:258px;flex-shrink:0;background:#fff;border-right:1px solid #EAECEF;display:flex;flex-direction:column;padding:20px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;">
       <div style="display:flex;align-items:center;gap:11px;padding:4px 6px 18px;">
         <div style="width:40px;height:40px;border-radius:12px;background:#C1121F;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px -6px rgba(193,18,31,.7);">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg>
@@ -275,7 +277,7 @@
                 </select>
               </div>
             </div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead>
                 <tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;">
                   <th style="padding:13px 20px;font-weight:700;">Kode</th>
@@ -298,7 +300,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -335,7 +337,7 @@
           </div>
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Riwayat Alat Masuk</div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:12px 20px;font-weight:700;">ID</th><th style="padding:12px;font-weight:700;">Tanggal</th><th style="padding:12px;font-weight:700;">Alat</th><th style="padding:12px;font-weight:700;">Qty</th><th style="padding:12px;font-weight:700;">Sumber</th><th style="padding:12px 20px;font-weight:700;">Kondisi</th></tr></thead>
               <tbody>
                 <sc-for list="{{ txInView }}" as="t" hint-placeholder-count="3">
@@ -349,7 +351,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -378,7 +380,7 @@
           </div>
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Riwayat Peminjaman</div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:12px 20px;font-weight:700;">ID</th><th style="padding:12px;font-weight:700;">Tanggal</th><th style="padding:12px;font-weight:700;">Alat</th><th style="padding:12px;font-weight:700;">Qty</th><th style="padding:12px;font-weight:700;">Keperluan</th><th style="padding:12px 20px;font-weight:700;">Status</th></tr></thead>
               <tbody>
                 <sc-for list="{{ txOutView }}" as="t" hint-placeholder-count="4">
@@ -392,7 +394,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -425,7 +427,7 @@
           </div>
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Riwayat Pengembalian</div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:12px 20px;font-weight:700;">ID</th><th style="padding:12px;font-weight:700;">Tanggal</th><th style="padding:12px;font-weight:700;">Alat</th><th style="padding:12px;font-weight:700;">Qty</th><th style="padding:12px;font-weight:700;">Kondisi</th><th style="padding:12px 20px;font-weight:700;">Rekonsiliasi</th></tr></thead>
               <tbody>
                 <sc-for list="{{ returnsView }}" as="t" hint-placeholder-count="3">
@@ -439,7 +441,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -449,21 +451,28 @@
         <div style="animation:pop .4s ease;">
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Antrian Maintenance</div>
-            <table style="width:100%;border-collapse:collapse;">
-              <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:12px 20px;font-weight:700;">Kode</th><th style="padding:12px;font-weight:700;">Alat</th><th style="padding:12px;font-weight:700;">Kerusakan</th><th style="padding:12px;font-weight:700;">Kondisi</th><th style="padding:12px;font-weight:700;">Teknisi</th><th style="padding:12px 20px;font-weight:700;">Status</th></tr></thead>
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:750px;">
+              <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:12px 20px;font-weight:700;">Kode</th><th style="padding:12px;font-weight:700;">Alat</th><th style="padding:12px;font-weight:700;">Kerusakan</th><th style="padding:12px;font-weight:700;">Kondisi</th><th style="padding:12px;font-weight:700;">Teknisi</th><th style="padding:12px;font-weight:700;">Status</th><th style="padding:12px 20px;font-weight:700;">Ubah Status</th></tr></thead>
               <tbody>
                 <sc-for list="{{ maintView }}" as="m" hint-placeholder-count="4">
                   <tr style="border-top:1px solid #F3F4F6;font-size:13.5px;">
                     <td style="padding:14px 20px;font-weight:700;color:#C1121F;font-family:monospace;">{{ m.kode }}</td>
                     <td style="padding:14px;font-weight:700;">{{ m.nama_alat }}</td>
-                    <td style="padding:14px;color:#5B626D;max-width:240px;">{{ m.issue }}</td>
+                    <td style="padding:14px;color:#5B626D;max-width:200px;">{{ m.issue }}</td>
                     <td style="padding:14px;"><span style="{{ m.condBadge }}">{{ m.kondisi_awal }}</span></td>
                     <td style="padding:14px;color:#5B626D;">{{ m.teknisi }}</td>
-                    <td style="padding:14px 20px;"><span style="{{ m.statusBadge }}">{{ m.status }}</span></td>
+                    <td style="padding:14px;"><span style="{{ m.statusBadge }}">{{ m.status }}</span></td>
+                    <td style="padding:14px 20px;">
+                      <select onChange="{{ m.onStatusChange }}" style="border:1px solid #E4E7EB;border-radius:8px;padding:7px 10px;font-size:12.5px;color:#3B414A;background:#fff;cursor:pointer;">
+                        <option value="Menunggu">Menunggu</option>
+                        <option value="Diproses">Diproses</option>
+                        <option value="Selesai">Selesai</option>
+                      </select>
+                    </td>
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -485,7 +494,7 @@
               <div style="font-size:15px;font-weight:700;">Riwayat Seluruh Transaksi</div>
               <div style="font-size:12.5px;color:#9AA0A8;margin-top:2px;">{{ histCount }} transaksi tercatat</div>
             </div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:13px 20px;font-weight:700;">Tanggal</th><th style="padding:13px 12px;font-weight:700;">Tipe</th><th style="padding:13px 12px;font-weight:700;">Alat</th><th style="padding:13px 12px;font-weight:700;">Qty</th><th style="padding:13px 12px;font-weight:700;">Keterangan</th><th style="padding:13px 12px;font-weight:700;">Kondisi / Status</th><th style="padding:13px 20px;font-weight:700;">Oleh</th></tr></thead>
               <tbody>
                 <sc-for list="{{ histView }}" as="h" hint-placeholder-count="6">
@@ -500,7 +509,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -532,7 +541,7 @@
           </div>
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Daftar Pengguna</div>
-            <table style="width:100%;border-collapse:collapse;">
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:650px;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:13px 20px;font-weight:700;">Nama</th><th style="padding:13px;font-weight:700;">NIM</th><th style="padding:13px;font-weight:700;">Role</th><th style="padding:13px;font-weight:700;">Login Terakhir</th><th style="padding:13px;font-weight:700;">Status</th><th style="padding:13px 20px;font-weight:700;">Aksi</th></tr></thead>
               <tbody>
                 <sc-for list="{{ usersView }}" as="u" hint-placeholder-count="5">
@@ -546,7 +555,7 @@
                   </tr>
                 </sc-for>
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
         </sc-if>
@@ -565,10 +574,10 @@
                 </div>
                 <div><div style="font-size:16px;font-weight:700;">{{ r.title }}</div><div style="font-size:13px;color:#9AA0A8;margin-top:3px;">{{ r.desc }}</div></div>
                 <div style="display:flex;gap:9px;margin-top:auto;">
-                  <button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#C1121F;color:#fff;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">
+                  <button onClick="{{ r.onPdf }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#C1121F;color:#fff;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>PDF
                   </button>
-                  <button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:#3B414A;border:1px solid #E4E7EB;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">
+                  <button onClick="{{ r.onExcel }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:#3B414A;border:1px solid #E4E7EB;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>Excel
                   </button>
                 </div>
@@ -743,6 +752,61 @@ class Component extends DCLogic {
     } catch(e) { this.toast('Error: ' + e.message); }
   }
 
+  async updateMaintStatus(id, status){
+    try {
+      await this.api('PUT', '/api/maintenance/' + id, { status });
+      this.toast('✓ Status diperbarui' + (status === 'Selesai' ? ' — kondisi alat dikembalikan ke Baik' : ''));
+      this.loadPage('maintenance');
+    } catch(e) { this.toast('Error: ' + e.message); }
+  }
+
+  async downloadReport(type, format){
+    try {
+      this.toast('Menyiapkan laporan…');
+      let headers, rows, filename;
+      if (type === 'inventaris') {
+        const res = await this.api('GET', '/api/equipment');
+        headers = ['Kode','Nama Alat','Kategori','Merk','Jumlah','Tersedia','Kondisi','Lokasi'];
+        rows = res.data.map(e=>[e.kode,e.nama_alat,e.kategori,e.merk,e.jumlah,e.tersedia,e.kondisi,e.lokasi||'-']);
+        filename = 'Laporan_Inventaris_ARCHATEL';
+      } else if (type === 'kondisi') {
+        const res = await this.api('GET', '/api/equipment');
+        headers = ['Kode','Nama Alat','Kondisi','Tersedia','Jumlah','Lokasi'];
+        rows = res.data.map(e=>[e.kode,e.nama_alat,e.kondisi,e.tersedia,e.jumlah,e.lokasi||'-']);
+        filename = 'Laporan_Kondisi_Alat_ARCHATEL';
+      } else if (type === 'riwayat') {
+        const res = await this.api('GET', '/api/history');
+        headers = ['Tanggal','Tipe','Alat','Kode','Qty','Keterangan','Kondisi/Status','Oleh'];
+        rows = res.data.map(h=>[h.tanggal,h.tipe,h.nama_alat,h.kode,h.qty,h.keterangan||'-',h.kondisi_status||'-',h.oleh||'-']);
+        filename = 'Riwayat_Pemakaian_ARCHATEL';
+      } else {
+        const res = await this.api('GET', '/api/history');
+        headers = ['Tanggal','Tipe','Alat','Qty','Keterangan','Oleh'];
+        rows = res.data.map(h=>[h.tanggal,h.tipe,h.nama_alat,h.qty,h.keterangan||'-',h.oleh||'-']);
+        filename = 'Rekap_Transaksi_ARCHATEL';
+      }
+      if (format === 'excel') {
+        const csv = [headers,...rows].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+        const blob = new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+        const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:filename+'.csv'});
+        a.click(); URL.revokeObjectURL(a.href);
+        this.toast('✓ File CSV berhasil diunduh');
+      } else {
+        const {jsPDF} = window.jspdf;
+        const doc = new jsPDF({orientation:'landscape'});
+        doc.setFontSize(14); doc.setFont(undefined,'bold');
+        doc.text('ARCHATEL — '+filename.replace(/_/g,' '), 14, 15);
+        doc.setFontSize(9); doc.setFont(undefined,'normal');
+        doc.text('Dicetak: '+new Date().toLocaleString('id-ID'), 14, 22);
+        doc.autoTable({head:[headers],body:rows,startY:28,
+          styles:{fontSize:8,cellPadding:2},
+          headStyles:{fillColor:[193,18,31],textColor:255,fontStyle:'bold'}});
+        doc.save(filename+'.pdf');
+        this.toast('✓ File PDF berhasil diunduh');
+      }
+    } catch(e){ this.toast('Error: '+e.message); }
+  }
+
   async deleteUser(id){
     if (!confirm('Hapus pengguna ini?')) return;
     try {
@@ -875,7 +939,8 @@ class Component extends DCLogic {
     }));
     const maintView = (S.maintenance||[]).map(m=>({...m,
       condBadge:   this.badge(...Object.values(this.condMeta(m.kondisi_awal))),
-      statusBadge: this.badge(...Object.values(this.statusMeta(m.status)))
+      statusBadge: this.badge(...Object.values(this.statusMeta(m.status))),
+      onStatusChange: e=>this.updateMaintStatus(m.id_maintenance, e.target.value)
     }));
     const usersView = (S.users||[]).map(u=>({...u,
       initials: u.nama_lengkap.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase(),
@@ -900,11 +965,14 @@ class Component extends DCLogic {
     const u  = S.user;
 
     const reportCards = [
-      {title:'Laporan Inventaris',  desc:'Stok & kondisi seluruh alat per kategori', color:'#C1121F'},
-      {title:'Laporan Kondisi Alat',desc:'Distribusi kondisi & alat butuh maintenance',color:'#D97706'},
-      {title:'Riwayat Pemakaian',   desc:'History peminjaman & pengembalian alat',    color:'#2563EB'},
-      {title:'Rekap Transaksi',     desc:'Alat masuk, keluar & retur per periode',    color:'#16A34A'}
-    ];
+      {title:'Laporan Inventaris',  desc:'Stok & kondisi seluruh alat per kategori', color:'#C1121F', key:'inventaris'},
+      {title:'Laporan Kondisi Alat',desc:'Distribusi kondisi & alat butuh maintenance',color:'#D97706', key:'kondisi'},
+      {title:'Riwayat Pemakaian',   desc:'History peminjaman & pengembalian alat',    color:'#2563EB', key:'riwayat'},
+      {title:'Rekap Transaksi',     desc:'Alat masuk, keluar & retur per periode',    color:'#16A34A', key:'rekap'}
+    ].map(r=>({...r,
+      onPdf:   ()=>this.downloadReport(r.key,'pdf'),
+      onExcel: ()=>this.downloadReport(r.key,'excel')
+    }));
 
     return {
       isLogin: !S.loggedIn, isApp: S.loggedIn,
