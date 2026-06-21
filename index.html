@@ -507,11 +507,31 @@
 
         <!-- ===== USERS ===== -->
         <sc-if value="{{ isUsers }}" hint-placeholder-val="{{ true }}">
-        <div style="animation:pop .4s ease;">
-          <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #F1F2F4;">
-              <div style="font-size:15px;font-weight:700;">Daftar Pengguna</div>
+        <div style="display:grid;grid-template-columns:340px 1fr;gap:16px;animation:pop .4s ease;align-items:start;">
+          <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;padding:20px;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;border-radius:10px;background:#FBE7E9;color:#B0182B;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div><div style="font-size:15px;font-weight:700;">Tambah Pengguna</div></div>
+            <div style="display:flex;flex-direction:column;gap:13px;margin-top:18px;">
+              <div><label style="font-size:12.5px;font-weight:600;color:#4B515A;">Nama Lengkap</label><input value="{{ formUserNama }}" onChange="{{ onFormUserNama }}" placeholder="Nama lengkap" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;" /></div>
+              <div><label style="font-size:12.5px;font-weight:600;color:#4B515A;">NIM</label><input value="{{ formUserNim }}" onChange="{{ onFormUserNim }}" placeholder="NIM mahasiswa" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;" /></div>
+              <div><label style="font-size:12.5px;font-weight:600;color:#4B515A;">Email</label><input type="email" value="{{ formUserEmail }}" onChange="{{ onFormUserEmail }}" placeholder="email@archatel.id" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;" /></div>
+              <div><label style="font-size:12.5px;font-weight:600;color:#4B515A;">Password</label><input type="password" value="{{ formUserPass }}" onChange="{{ onFormUserPass }}" placeholder="Password awal" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;" /></div>
+              <div style="display:flex;gap:10px;">
+                <div style="flex:1;"><label style="font-size:12.5px;font-weight:600;color:#4B515A;">Role</label>
+                  <select value="{{ formUserRole }}" onChange="{{ onFormUserRole }}" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;">
+                    <option value="anggota">Anggota</option><option value="logistik">Logistik</option>
+                  </select>
+                </div>
+                <div style="flex:1;"><label style="font-size:12.5px;font-weight:600;color:#4B515A;">Status</label>
+                  <select value="{{ formUserStatus }}" onChange="{{ onFormUserStatus }}" style="width:100%;margin-top:6px;padding:10px 12px;border:1.5px solid #E6E8EC;border-radius:10px;font-size:13.5px;background:#FAFBFC;">
+                    <option>Aktif</option><option>Nonaktif</option>
+                  </select>
+                </div>
+              </div>
+              <button onClick="{{ saveUser }}" style="margin-top:4px;width:100%;padding:12px;border:none;border-radius:11px;background:#C1121F;color:#fff;font-weight:700;font-size:14px;cursor:pointer;">Tambah Pengguna</button>
             </div>
+          </div>
+          <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
+            <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Daftar Pengguna</div>
             <table style="width:100%;border-collapse:collapse;">
               <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:13px 20px;font-weight:700;">Nama</th><th style="padding:13px;font-weight:700;">NIM</th><th style="padding:13px;font-weight:700;">Role</th><th style="padding:13px;font-weight:700;">Login Terakhir</th><th style="padding:13px 20px;font-weight:700;">Status</th></tr></thead>
               <tbody>
@@ -602,7 +622,8 @@ class Component extends DCLogic {
     // forms
     formEqinId: '', formEqinQty: '1', formEqinDate: today(), formEqinSumber: 'Pembelian', formEqinKondisi: 'Sangat Baik',
     formEqoutId: '', formEqoutQty: '1', formEqoutDate: today(), formEqoutPeminjam: '', formEqoutEst: '',
-    formRetId: '', formRetQty: '1', formRetDate: today(), formRetKondisi: 'Baik', formRetCatatan: ''
+    formRetId: '', formRetQty: '1', formRetDate: today(), formRetKondisi: 'Baik', formRetCatatan: '',
+    formUserNama: '', formUserNim: '', formUserEmail: '', formUserPass: '', formUserRole: 'anggota', formUserStatus: 'Aktif'
   };
 
   set(patch){ this.setState(patch); }
@@ -718,6 +739,22 @@ class Component extends DCLogic {
       });
       this.toast('✓ Peminjaman berhasil dicatat');
       this.loadPage('eqout');
+    } catch(e) { this.toast('Error: ' + e.message); }
+  }
+
+  async saveUser(){
+    try {
+      await this.api('POST', '/api/users', {
+        nama_lengkap: this.state.formUserNama,
+        nim: this.state.formUserNim,
+        email: this.state.formUserEmail,
+        password: this.state.formUserPass,
+        role: this.state.formUserRole,
+        status: this.state.formUserStatus
+      });
+      this.toast('✓ Pengguna berhasil ditambahkan');
+      this.set({formUserNama:'', formUserNim:'', formUserEmail:'', formUserPass:'', formUserRole:'anggota', formUserStatus:'Aktif'});
+      this.loadPage('users');
     } catch(e) { this.toast('Error: ' + e.message); }
   }
 
@@ -918,6 +955,14 @@ class Component extends DCLogic {
       formRetKondisi:S.formRetKondisi, onFormRetKondisi:e=>this.set({formRetKondisi:e.target.value}),
       formRetCatatan:S.formRetCatatan, onFormRetCatatan:e=>this.set({formRetCatatan:e.target.value}),
       saveRet:()=>this.saveRet(),
+      // forms user
+      formUserNama:S.formUserNama, onFormUserNama:e=>this.set({formUserNama:e.target.value}),
+      formUserNim:S.formUserNim,   onFormUserNim:e=>this.set({formUserNim:e.target.value}),
+      formUserEmail:S.formUserEmail, onFormUserEmail:e=>this.set({formUserEmail:e.target.value}),
+      formUserPass:S.formUserPass,   onFormUserPass:e=>this.set({formUserPass:e.target.value}),
+      formUserRole:S.formUserRole,   onFormUserRole:e=>this.set({formUserRole:e.target.value}),
+      formUserStatus:S.formUserStatus, onFormUserStatus:e=>this.set({formUserStatus:e.target.value}),
+      saveUser:()=>this.saveUser(),
       // misc
       reportCards,
       toast:S.toast, hasToast:!!S.toast
