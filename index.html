@@ -945,15 +945,15 @@ class Component extends DCLogic {
   pageMeta(){
     const name = this.state.user ? this.state.user.nama_lengkap.split(' ')[0] : '';
     const m = {
-      dashboard:   {t:'Halo, '+name+' 🎯', s:'Ringkasan inventaris alat panahan ARCHATEL hari ini.'},
-      equipment:   {t:'Master Data Alat', s:'Kelola seluruh data alat panahan ARCHATEL.'},
-      eqin:        {t:'Alat Masuk', s:'Catat penambahan alat dari pembelian atau donasi.'},
-      eqout:       {t:'Alat Keluar', s:'Catat peminjaman alat untuk latihan & kegiatan.'},
-      ret:         {t:'Pengembalian', s:'Rekonsiliasi alat yang dikembalikan beserta kondisinya.'},
-      maintenance: {t:'Maintenance', s:'Pantau alat yang membutuhkan perbaikan.'},
-      report:      {t:'Laporan', s:'Ekspor laporan inventaris, kondisi & riwayat pemakaian.'},
-      history:     {t:'History Pemakaian', s:'Riwayat lengkap seluruh transaksi alat panahan ARCHATEL.'},
-      users:       {t:'Manajemen Pengguna', s:'Kelola akun & hak akses anggota divisi.'}
+      dashboard:   {t:'Halo, '+name+' 🎯', s:''},
+      equipment:   {t:'Master Data Alat', s:''},
+      eqin:        {t:'Alat Masuk', s:''},
+      eqout:       {t:'Alat Keluar', s:''},
+      ret:         {t:'Pengembalian', s:''},
+      maintenance: {t:'Maintenance', s:''},
+      report:      {t:'Laporan', s:''},
+      history:     {t:'History Pemakaian', s:''},
+      users:       {t:'Manajemen Pengguna', s:''}
     };
     return m[this.state.page] || m.dashboard;
   }
