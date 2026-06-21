@@ -533,7 +533,7 @@
           <div style="background:#fff;border-radius:18px;border:1px solid #EEF0F3;overflow:hidden;">
             <div style="padding:18px 20px;border-bottom:1px solid #F1F2F4;font-size:15px;font-weight:700;">Daftar Pengguna</div>
             <table style="width:100%;border-collapse:collapse;">
-              <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:13px 20px;font-weight:700;">Nama</th><th style="padding:13px;font-weight:700;">NIM</th><th style="padding:13px;font-weight:700;">Role</th><th style="padding:13px;font-weight:700;">Login Terakhir</th><th style="padding:13px 20px;font-weight:700;">Status</th></tr></thead>
+              <thead><tr style="background:#FAFBFC;text-align:left;color:#8B929C;font-size:12px;text-transform:uppercase;letter-spacing:.4px;"><th style="padding:13px 20px;font-weight:700;">Nama</th><th style="padding:13px;font-weight:700;">NIM</th><th style="padding:13px;font-weight:700;">Role</th><th style="padding:13px;font-weight:700;">Login Terakhir</th><th style="padding:13px;font-weight:700;">Status</th><th style="padding:13px 20px;font-weight:700;">Aksi</th></tr></thead>
               <tbody>
                 <sc-for list="{{ usersView }}" as="u" hint-placeholder-count="5">
                   <tr style="border-top:1px solid #F3F4F6;font-size:13.5px;">
@@ -541,7 +541,8 @@
                     <td style="padding:13px;color:#5B626D;font-family:monospace;">{{ u.nim }}</td>
                     <td style="padding:13px;"><span style="{{ u.roleStyle }}">{{ u.role }}</span></td>
                     <td style="padding:13px;color:#5B626D;">{{ u.last_active }}</td>
-                    <td style="padding:13px 20px;"><span style="{{ u.statusBadge }}">{{ u.status }}</span></td>
+                    <td style="padding:13px;"><span style="{{ u.statusBadge }}">{{ u.status }}</span></td>
+                    <td style="padding:13px 20px;"><button onClick="{{ u.onDelete }}" style="display:flex;align-items:center;gap:6px;background:#FBE4E5;color:#B91C1C;border:none;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>Hapus</button></td>
                   </tr>
                 </sc-for>
               </tbody>
@@ -742,6 +743,15 @@ class Component extends DCLogic {
     } catch(e) { this.toast('Error: ' + e.message); }
   }
 
+  async deleteUser(id){
+    if (!confirm('Hapus pengguna ini?')) return;
+    try {
+      await this.api('DELETE', '/api/users/' + id);
+      this.toast('✓ Pengguna berhasil dihapus');
+      this.loadPage('users');
+    } catch(e) { this.toast('Error: ' + e.message); }
+  }
+
   async saveUser(){
     try {
       await this.api('POST', '/api/users', {
@@ -870,7 +880,8 @@ class Component extends DCLogic {
     const usersView = (S.users||[]).map(u=>({...u,
       initials: u.nama_lengkap.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase(),
       statusBadge: this.badge(...Object.values(this.statusMeta(u.status))),
-      roleStyle: this.badge(u.role==='logistik'?'#B0182B':'#475569', u.role==='logistik'?'#FBE7E9':'#EEF1F4')
+      roleStyle: this.badge(u.role==='logistik'?'#B0182B':'#475569', u.role==='logistik'?'#FBE7E9':'#EEF1F4'),
+      onDelete: ()=>this.deleteUser(u.id_user)
     }));
 
     const histTypeMeta = {'Alat Masuk':{fg:'#15803D',bg:'#E4F6EA'},'Alat Keluar':{fg:'#2563EB',bg:'#E7EEFC'},'Pengembalian':{fg:'#B45309',bg:'#FBEFDA'}};
